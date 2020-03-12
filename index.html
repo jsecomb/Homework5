@@ -42,7 +42,6 @@
 
       var workHours = ["9AM", "10AM", "11AM", "12PM", "1PM", "2PM", "3PM", "4PM", "5PM"];
       var activityBlock;
-      var activityInput;
       var saveBlock;
 
       for (var i = 0; i < 9; i++){
@@ -53,12 +52,7 @@
 
         activityBlock = $("<input/>").attr({ type: "text", id: "activity"}).appendTo(hourRow).attr("width", "70%");
 
-        saveBlock = $("<button id=save>Save</button>").appendTo(hourRow).attr("width", "15%").click(saveResponse());
-      }
-
-      function saveResponse() {
-        activityInput = ("#activity").val();
-        console.log(activityInput);
+        saveBlock = $("<button id=save>Save</button>").appendTo(hourRow).attr("width", "15%").click(function saveResponse() {console.log(activityBlock.val());});
       }
 
     </script>
