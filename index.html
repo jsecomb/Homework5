@@ -41,6 +41,9 @@
     <script type="text/javascript">
 
       var workHours = ["9AM", "10AM", "11AM", "12PM", "1PM", "2PM", "3PM", "4PM", "5PM"];
+      var activityBlock;
+      var activityInput;
+      var saveBlock;
 
       for (var i = 0; i < 9; i++){
         var hourRow = $("<tr>").appendTo("table");
@@ -48,15 +51,14 @@
         var hourBlock = $("<td id=hour></td>").text(workHours[i]).appendTo(hourRow);
         $("#hour").attr("width", "15%");
 
-        var activityBlock = $("<input/>").attr({ type: "text", id: "activity"}).appendTo(hourRow).attr("width", "70%");
+        activityBlock = $("<input/>").attr({ type: "text", id: "activity"}).appendTo(hourRow).attr("width", "70%");
 
-        var activityInput = $("#activity").val();
-
-        var saveBlock = $("<button id=save>Save</button>").appendTo(hourRow).attr("width", "15%").click(saveResponse(activityInput));
+        saveBlock = $("<button id=save>Save</button>").appendTo(hourRow).attr("width", "15%").click(saveResponse());
       }
 
-      function saveResponse(activity){
-        console.log(activity);
+      function saveResponse() {
+        activityInput = $("#activity").val();
+        console.log(activityInput);
       }
 
     </script>
