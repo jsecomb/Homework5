@@ -47,8 +47,7 @@
       for (var i = 0; i < 9; i++){
         var hourRow = $("<tr>").appendTo("table");
 
-        var hourBlock = $("<td id=hour></td>").text(workHours[i]).appendTo(hourRow);
-        $("#hour").attr("width", "15%");
+        var hourBlock = $("<td id=hour></td>").text(workHours[i]).appendTo(hourRow).attr("width", "15%");
 
         activityBlock = $("<input/>").attr({ type: "text", id: "activity"}).appendTo(hourRow).attr("width", "70%");
 
