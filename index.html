@@ -44,20 +44,26 @@
     var currentTime = moment().format('HH:mm'); //stores current time in 24 hour format
     var workHours = ["9AM", "10AM", "11AM", "12PM", "1PM", "2PM", "3PM", "4PM", "5PM"]; //array of working hours strings
     var workHoursMil = [9, 10, 11, 12, 13, 14, 15, 16, 17]; //array of working hours in 24 hour format
-    var schedule = JSON.parse(window.localStorage.getItem("schedule")); //sets var schedule to schedule from local storage
+    var schedule;
     var saveBtn; 
     var activityInput;
 
     document.getElementById('displayMoment').innerHTML = "Current time: " + moment().format('LT') + " PST"; //display time in normal AM/PM format
     
+    if (JSON.parse(window.localStorage.getItem("schedule")) == null) { //sets schedule to array of empty strings if no schedule in local storage 
+      schedule = ["","","","","","","","",""];
+    }
+    else if (JSON.parse(window.localStorage.getItem("schedule")) != null) { //sets schedule to stored schedule from local storage 
+      schedule = JSON.parse(window.localStorage.getItem("schedule")); 
+    }
+
     for (var i = 0; i < 9; i++) { 
       var hourRow = $("<tr>").appendTo("table"); //starts new row in table (corresponding to an hour of the day)
 
       var hour = $("<td>").text(workHours[i]).appendTo(hourRow); //creates each hour block, taking text from workHours array
 
       activityInput = $("<input/>").attr({ type: "text", class: "activity" }).appendTo(hourRow).attr({ "data-input": i }); //creates input field & data-input attr that iterates on each loop
-
-      $(".activity[data-input=" + i + "]").attr("value", schedule[i]); //sets value of activityInput to existing value from local storage (via schedule variable)
+      $(".activity[data-input=" + i + "]").attr("value", schedule[i]); 
 
       saveBtn = $("<button id=save class=submitBtn>Save</button>").appendTo(hourRow).attr("data-time", i); // creates save button & data-time attr that iterates on each loop
 
