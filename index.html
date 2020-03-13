@@ -34,22 +34,23 @@
     </header>
 
     <div class="container">
-      <table class="table"></table>
+      <table class="table"></table> <!--schedule table appended to this html element-->
     </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript">
     
-    var currentTime = moment().format('HH:mm');
-    var workHours = ["9AM", "10AM", "11AM", "12PM", "1PM", "2PM", "3PM", "4PM", "5PM"];
-    var schedule = JSON.parse(window.localStorage.getItem("schedule"));
-    var saveBtn;
+    var currentTime = moment().format('HH:mm'); //stores current time in 24 hour format
+    var workHours = ["9AM", "10AM", "11AM", "12PM", "1PM", "2PM", "3PM", "4PM", "5PM"]; //array of working hours strings
+    var workHoursMil = [9, 10, 11, 12, 13, 14, 15, 16, 17]; //array of working hours in 24 hour format
+    var schedule = JSON.parse(window.localStorage.getItem("schedule")); //sets var schedule to schedule from local storage
+    var saveBtn; 
     var activityInput;
 
-    document.getElementById('displayMoment').innerHTML = "Current time: " + currentTime + " PST";
+    document.getElementById('displayMoment').innerHTML = "Current time: " + moment().format('LT') + " PST"; //display time in normal AM/PM format
     
-    for (var i = 0; i < 9; i++) {
+    for (var i = 0; i < 9; i++) { 
       var hourRow = $("<tr>").appendTo("table"); //starts new row in table (corresponding to an hour of the day)
 
       var hour = $("<td>").text(workHours[i]).appendTo(hourRow); //creates each hour block, taking text from workHours array
@@ -59,25 +60,26 @@
       $(".activity[data-input=" + i + "]").attr("value", schedule[i]); //sets value of activityInput to existing value from local storage (via schedule variable)
 
       saveBtn = $("<button id=save class=submitBtn>Save</button>").appendTo(hourRow).attr("data-time", i); // creates save button & data-time attr that iterates on each loop
+
+      if (parseInt(currentTime) < workHoursMil[i]) { //input field green if work hours haven't happened yet
+        $(".activity[data-input=" + i + "]").css("background-color", "lightgreen");
       }
 
-    if (parseInt(currentTime) < parseInt(workHours[i])) {
-      $(".activity[data-input=" + i + "]").css("background-color", "green");
-      console.log("hasn't happened yet");
+      if (parseInt(currentTime) === workHoursMil[i]) { //input field grey if work hour same as current hour
+        $(".activity[data-input=" + i + "]").css("background-color", "lightgrey");
+      }
+
+      if (parseInt(currentTime) > workHoursMil[i]) { //input field red if work hours have already passed
+        $(".activity[data-input=" + i + "]").css("background-color", "indianred");
+      }
     }
 
-    $(".submitBtn").on("click", function () {
-      var hourChoice = $(this).data("time"); //variable contains corresponding hour of button clicked
+    $(".submitBtn").on("click", function () { //click event when submit button clicked
+      var hourChoice = $(this).data("time"); //variable contains corresponding hour of clicked button
       schedule[hourChoice] = ($(".activity[data-input=" + hourChoice + "]").val()); //sets corresponding element in array to activityInput for that hour choice.
-      window.localStorage.setItem("schedule", JSON.stringify(schedule));
+      window.localStorage.setItem("schedule", JSON.stringify(schedule)); //sets updated schedule array into local storage
       console.log(schedule);
     }); 
-
-    
-    
-  
-
-
 
   </script>
 
