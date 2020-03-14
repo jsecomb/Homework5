@@ -63,3 +63,23 @@ h1{
     margin-left: 15px;
     margin-bottom: 15px;
 }
+
+@media screen and (max-width: 550px) {
+    input {
+        width: 200px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    input {
+        width: 150px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    input {
+        width: 125px;
+        margin: 8px;
+    }
+}
+
